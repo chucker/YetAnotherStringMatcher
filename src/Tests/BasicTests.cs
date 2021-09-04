@@ -6,11 +6,21 @@ namespace Tests
     public class BasicTests
     {
         [Fact]
-        public void Test1()
+        public void Test000()
+        {
+            // No requirements 
+
+            var result = new Matcher("abc_aBc").Check();
+
+            Assert.True(result.Success);
+        }
+
+        [Fact]
+        public void Test001()
         {
             // Testing Then
 
-            var matcher = new Matcher("123_123")
+            var matcher = new Matcher("123_123x")
                             .Match("123")
                             .Then("_")
                             .Then("123")
@@ -20,7 +30,7 @@ namespace Tests
         }
 
         [Fact]
-        public void Test2()
+        public void Test002()
         {
             // Testing ThenAnyOf
 
@@ -33,7 +43,7 @@ namespace Tests
         }
 
         [Fact]
-        public void Test3()
+        public void Test003()
         {
             // Multiple_Evaluations
 
@@ -51,32 +61,22 @@ namespace Tests
         }
 
         [Fact]
-        public void Test4()
+        public void Test004()
         {
             // Test IgnoreCaseOptions
 
-            var options = new CheckOptions
-            {
-                IgnoreCase = true
-            };
-
             var result = new Matcher("abc_aBc")
                             .Match("abc")
-                            .ThenAnyOf("_", "_Ab", "_aE", "_ABC").WithOptions(options)
+                            .ThenAnyOf("_", "_Ab", "_aE", "_ABC").IgnoreCase()
                             .Check();
 
             Assert.True(result.Success);
         }
 
         [Fact]
-        public void Test5()
+        public void Test005()
         {
             // Test Case Fail
-
-            var options = new CheckOptions
-            {
-                IgnoreCase = true
-            };
 
             var result = new Matcher("abc_aBc")
                             .Match("abc")
@@ -84,6 +84,34 @@ namespace Tests
                             .Check();
 
             Assert.False(result.Success);
+        }
+
+        [Fact]
+        public void Test006()
+        {
+            // Then Anything 
+
+            var result = new Matcher("abc_aBc")
+                            .Match("abc")
+                            .ThenAnything()
+                            .Then("c")
+                            .Check();
+
+            Assert.True(result.Success);
+        }
+
+        [Fact]
+        public void Test007()
+        {
+            // Then Anything Of Length 
+
+            var result = new Matcher("abc12c")
+                            .Match("abc")
+                            .ThenAnythingOfLength(2)
+                            .Then("c")
+                            .Check();
+
+            Assert.True(result.Success);
         }
     }
 }

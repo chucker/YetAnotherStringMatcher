@@ -10,7 +10,7 @@
 
         public bool Success { get; }
 
-        public string ErrorMessage { get;  }
+        public string ErrorMessage { get; }
 
         public override string ToString()
         {

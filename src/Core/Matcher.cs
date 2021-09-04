@@ -11,7 +11,7 @@ namespace YetAnotherStringMatcher
 
         private int Index { get; set; } = 0;
 
-        private List<IRequirement> Requirements { get; } = new List<IRequirement>();
+        private List<IRequirement> Requirements { get; set; } = new List<IRequirement>();
 
         public Matcher(string item)
         {
@@ -24,6 +24,7 @@ namespace YetAnotherStringMatcher
         {
             try
             {
+                Prepare();
                 return Evaluate();
             }
             finally
@@ -58,12 +59,35 @@ namespace YetAnotherStringMatcher
             return ThenCustom(new ThenAnyOfRequirement(items));
         }
 
-        public Matcher WithOptions(CheckOptions options)
+        public Matcher ThenAnything()
+        {
+            return ThenCustom(new ThenAnythingRequirement());
+        }
+
+        public Matcher ThenAnythingOfLength(int i)
+        {
+            return ThenCustom(new ThenAnythingRequirement(i));
+        }
+
+        public Matcher IgnoreCase()
         {
             if (Requirements.Count == 0)
                 throw new Exception("Cannot apply Options when there's not even one Requirement registered.");
 
-            Requirements.Last().ApplyOptions(options);
+            var last = Requirements.Last().Options.IgnoreCase = true;
+
+            return this;
+        }
+
+        public Matcher IgnoreCaseForAllExisting()
+        {
+            if (Requirements.Count == 0)
+                throw new Exception("Cannot apply Options when there's not even one Requirement registered.");
+
+            foreach (var req in Requirements)
+            {
+                req.Options.IgnoreCase = true;
+            }
 
             return this;
         }
@@ -94,7 +118,7 @@ namespace YetAnotherStringMatcher
                             $"Received index: {Index}; New index: {result.NewIndex}. ");
                     }
 
-                    if (WithinBounds(result.NewIndex))
+                    if (IndexHelper.WithinBounds(OriginalString, result.NewIndex))
                     {
                         Index = result.NewIndex;
                     }
@@ -123,9 +147,26 @@ namespace YetAnotherStringMatcher
             return new EvaluationResult(true, "");
         }
 
-        private bool WithinBounds(int newIndex)
+        private void Prepare()
         {
-            return newIndex < OriginalString.Length && newIndex >= 0;
+            var indices_to_to_remove = new List<int>();
+
+            for (int i = 0; i < Requirements.Count; i++)
+            {
+                var current = Requirements[i];
+
+                if (current is ThenAnythingRequirement tar)
+                {
+                    if (i < Requirements.Count - 1)
+                    {
+                        i++;
+                        tar.NextRequirement = Requirements[i];
+                        indices_to_to_remove.Add(i);
+                    }
+                }
+            }
+
+            Requirements = Requirements.Where((req, index) => !indices_to_to_remove.Contains(index)).ToList();
         }
     }
 }

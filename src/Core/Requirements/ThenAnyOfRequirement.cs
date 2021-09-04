@@ -9,10 +9,12 @@ namespace YetAnotherStringMatcher.Requirements
 
         public string[] Items { get; set; }
 
-        private CheckOptions Options { get; set; }
+        public CheckOptions Options { get; set; } = new CheckOptions();
 
         public ThenAnyOfRequirement(params string[] items)
         {
+            // We want to find longest string that matches,
+            // so we start searching with the longest strings at the beginning.
             Items = items.OrderByDescending(x => x.Length).ToArray();
         }
 
@@ -35,13 +37,9 @@ namespace YetAnotherStringMatcher.Requirements
 
             return new CheckResult(false, index);
         }
-
-        public void ApplyOptions(CheckOptions options)
+        public override string ToString()
         {
-            if (options is null)
-                throw new ArgumentNullException(nameof(options));
-
-            Options = options;
+            return "Then Any Of Requirement";
         }
     }
 }

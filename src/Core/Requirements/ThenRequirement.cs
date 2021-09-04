@@ -8,7 +8,7 @@ namespace YetAnotherStringMatcher.Requirements
 
         public string Item { get; set; }
 
-        private CheckOptions Options { get; set; }
+        public CheckOptions Options { get; set; } = new CheckOptions();
 
         public ThenRequirement(string item)
         {
@@ -31,12 +31,9 @@ namespace YetAnotherStringMatcher.Requirements
             return new CheckResult(result, newIndex);
         }
 
-        public void ApplyOptions(CheckOptions options)
+        public override string ToString()
         {
-            if (options is null)
-                throw new ArgumentNullException(nameof(options));
-
-            Options = options;
+            return "Then Requirement";
         }
     }
 }

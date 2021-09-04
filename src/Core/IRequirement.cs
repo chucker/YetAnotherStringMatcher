@@ -21,10 +21,6 @@
         /// <returns>Returns whether current requirement is fulfilled and at which next index we should move.</returns>
         CheckResult Check(string original, int index);
 
-        /// <summary>
-        /// Takes Options that user wants to apply to this requirement e.g IgnoreCase
-        /// </summary>
-        /// <param name="options"></param>
-        void ApplyOptions(CheckOptions options);
+        CheckOptions Options { get; set; }
     }
 }
