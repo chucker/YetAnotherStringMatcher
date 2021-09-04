@@ -204,5 +204,50 @@ namespace Tests
 
             Assert.True(matcher.Success);
         }
+
+        [Fact]
+        public void Test017_EndRequirement_Fails()
+        {
+            var result = new Matcher("abc_c")
+                            .Match("abc")
+                            .End()
+                            .Check();
+
+            Assert.False(result.Success);
+        }
+
+        [Fact]
+        public void Test018_EndRequirement()
+        {
+            var result = new Matcher("abc_")
+                            .Match("abc")
+                            .ThenAnything()
+                            .End()
+                            .Check();
+
+            Assert.True(result.Success);
+        }
+
+        [Fact]
+        public void Test019_BadEndRequirement()
+        {
+            var result = new Matcher("abc_")
+                            .Match("abc_")
+                            .End()
+                            .End();
+
+            Assert.Throws<InvalidOperationException>(() => result.Check());
+        }
+
+        [Fact]
+        public void Test020_BadEndRequirement()
+        {
+            var result = new Matcher("abc_1")
+                            .Match("abc_")
+                            .End()
+                            .Then("1");
+
+            Assert.Throws<InvalidOperationException>(() => result.Check());
+        }
     }
 }

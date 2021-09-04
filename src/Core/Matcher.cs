@@ -87,6 +87,11 @@ namespace YetAnotherStringMatcher
             return ThenCustom(new ThenSomethingOfLenghtRequirement(length, pred));
         }
 
+        public Matcher End()
+        {
+            return ThenCustom(new EndRequirement());
+        }
+
         public Matcher IgnoreCase()
         {
             if (Requirements.Count == 0)
@@ -167,6 +172,18 @@ namespace YetAnotherStringMatcher
 
         private void Prepare()
         {
+            var endRequirements = Requirements
+                .Select((x, Index) => new { Object = x, Index })
+                .Where(data => data.Object is EndRequirement)
+                .Select(x => x.Index)
+                .ToList();
+
+            if (endRequirements.Any() &&
+                (endRequirements.Count > 1 || endRequirements[0] != Requirements.Count - 1))
+            {
+                throw new InvalidOperationException("EndRequirement can occur only once at the end of pattern");
+            }
+
             var indices_to_to_remove = new List<int>();
 
             for (int i = 0; i < Requirements.Count; i++)
