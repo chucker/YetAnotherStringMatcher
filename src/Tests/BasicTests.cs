@@ -210,7 +210,7 @@ namespace Tests
         {
             var result = new Matcher("abc_c")
                             .Match("abc")
-                            .End()
+                            .NoMore()
                             .Check();
 
             Assert.False(result.Success);
@@ -222,7 +222,7 @@ namespace Tests
             var result = new Matcher("abc_")
                             .Match("abc")
                             .ThenAnything()
-                            .End()
+                            .NoMore()
                             .Check();
 
             Assert.True(result.Success);
@@ -233,8 +233,8 @@ namespace Tests
         {
             var result = new Matcher("abc_")
                             .Match("abc_")
-                            .End()
-                            .End();
+                            .NoMore()
+                            .NoMore();
 
             Assert.Throws<InvalidOperationException>(() => result.Check());
         }
@@ -244,7 +244,7 @@ namespace Tests
         {
             var result = new Matcher("abc_1")
                             .Match("abc_")
-                            .End()
+                            .NoMore()
                             .Then("1");
 
             Assert.Throws<InvalidOperationException>(() => result.Check());

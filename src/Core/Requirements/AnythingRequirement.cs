@@ -1,13 +1,13 @@
 ﻿namespace YetAnotherStringMatcher.Requirements
 {
-    public class ThenAnythingRequirement : IRequirement
+    public class AnythingRequirement : IRequirement
     {
-        public ThenAnythingRequirement()
+        public AnythingRequirement()
         {
 
         }
 
-        public ThenAnythingRequirement(int expectedLength)
+        public AnythingRequirement(int expectedLength)
         {
             ExpectedLength = expectedLength;
         }

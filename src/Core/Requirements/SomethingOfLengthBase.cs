@@ -2,7 +2,7 @@
 
 namespace YetAnotherStringMatcher.Requirements
 {
-    public abstract class ThenSomethingOfLengthBase : IRequirement
+    public abstract class SomethingOfLengthBase : IRequirement
     {
         public virtual string Name => "Matches symbol(s) that do satisfy predicate " +
             "and have expected length";
@@ -11,7 +11,7 @@ namespace YetAnotherStringMatcher.Requirements
 
         public CheckOptions Options { get; set; } = new CheckOptions();
 
-        public ThenSomethingOfLengthBase(int length)
+        public SomethingOfLengthBase(int length)
         {
             Length = length;
         }

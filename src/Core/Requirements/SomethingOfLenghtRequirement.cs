@@ -2,9 +2,9 @@
 
 namespace YetAnotherStringMatcher.Requirements
 {
-    public class ThenSomethingOfLenghtRequirement : ThenSomethingOfLengthBase
+    public class SomethingOfLenghtRequirement : SomethingOfLengthBase
     {
-        public ThenSomethingOfLenghtRequirement(int length, Func<char, CheckOptions, bool> predicate)
+        public SomethingOfLenghtRequirement(int length, Func<char, CheckOptions, bool> predicate)
             : base(length)
         {
             Predicate = predicate;

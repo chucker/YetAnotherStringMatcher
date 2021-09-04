@@ -33,20 +33,11 @@ namespace YetAnotherStringMatcher
             }
         }
 
-        public Matcher ThenCustom(IRequirement requirement)
-        {
-            Requirements.Add(requirement);
-            return this;
-        }
+        // Basic
 
         public Matcher Match(string item)
         {
             return Then(item);
-        }
-
-        public Matcher MatchAnyOf(params string[] items)
-        {
-            return ThenCustom(new ThenAnyOfRequirement(items));
         }
 
         public Matcher Then(string item)
@@ -54,40 +45,84 @@ namespace YetAnotherStringMatcher
             return ThenCustom(new ThenRequirement(item));
         }
 
+        // AnyOf
+        public Matcher MatchAnyOf(params string[] items)
+        {
+            return ThenCustom(new AnyOfRequirement(items));
+        }
+
         public Matcher ThenAnyOf(params string[] items)
         {
-            return ThenCustom(new ThenAnyOfRequirement(items));
+            return ThenCustom(new AnyOfRequirement(items));
+        }
+
+        // Anything
+        public Matcher MatchAnything()
+        {
+            return ThenCustom(new AnythingRequirement());
         }
 
         public Matcher ThenAnything()
         {
-            return ThenCustom(new ThenAnythingRequirement());
+            return ThenCustom(new AnythingRequirement());
+        }
+
+        // Anything Of Length
+
+        public Matcher MatchAnythingOfLength(int length)
+        {
+            return ThenCustom(new AnythingRequirement(length));
         }
 
         public Matcher ThenAnythingOfLength(int length)
         {
-            return ThenCustom(new ThenAnythingRequirement(length));
+            return ThenCustom(new AnythingRequirement(length));
+        }
+
+        // Digits Of Length
+
+        public Matcher MatchDigitsOfLength(int length)
+        {
+            Func<char, CheckOptions, bool> predicate =
+                (char c, CheckOptions o) => char.IsDigit(c);
+
+            return ThenCustom(new SomethingOfLenghtRequirement(length, predicate));
         }
 
         public Matcher ThenDigitsOfLength(int length)
         {
-            Func<char, CheckOptions, bool> predicate = 
+            Func<char, CheckOptions, bool> predicate =
                 (char c, CheckOptions o) => char.IsDigit(c);
 
-            return ThenCustom(new ThenSomethingOfLenghtRequirement(length, predicate));
+            return ThenCustom(new SomethingOfLenghtRequirement(length, predicate));
+        }
+
+        // Symbols Of Length
+
+        public Matcher MatchSymbolsOfLength(char[] symbols, int length)
+        {
+            return ThenCustom(new SymbolsOfLengthRequirement(length, symbols));
         }
 
         public Matcher ThenSymbolsOfLength(char[] symbols, int length)
         {
-            return ThenCustom(new ThenSymbolsOfLengthRequirement(length, symbols));
+            return ThenCustom(new SymbolsOfLengthRequirement(length, symbols));
+        }
+
+        // Custom Of Length
+        public Matcher MatchCustomOfLength(Func<char, CheckOptions, bool> pred, int length)
+        {
+            return ThenCustom(new SomethingOfLenghtRequirement(length, pred));
         }
 
         public Matcher ThenCustomOfLength(Func<char, CheckOptions, bool> pred, int length)
         {
-            return ThenCustom(new ThenSomethingOfLenghtRequirement(length, pred));
+            return ThenCustom(new SomethingOfLenghtRequirement(length, pred));
         }
 
-        public Matcher End()
+        // Other:
+
+        public Matcher NoMore()
         {
             return ThenCustom(new EndRequirement());
         }
@@ -112,6 +147,12 @@ namespace YetAnotherStringMatcher
                 req.Options.IgnoreCase = true;
             }
 
+            return this;
+        }
+
+        public Matcher ThenCustom(IRequirement requirement)
+        {
+            Requirements.Add(requirement);
             return this;
         }
 
@@ -190,7 +231,7 @@ namespace YetAnotherStringMatcher
             {
                 var current = Requirements[i];
 
-                if (current is ThenAnythingRequirement tar)
+                if (current is AnythingRequirement tar)
                 {
                     if (i < Requirements.Count - 1)
                     {

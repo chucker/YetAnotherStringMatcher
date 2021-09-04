@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace YetAnotherStringMatcher.Requirements
 {
-    public class ThenSymbolsOfLengthRequirement : ThenSomethingOfLengthBase
+    public class SymbolsOfLengthRequirement : SomethingOfLengthBase
     {
-        public ThenSymbolsOfLengthRequirement(int length, IEnumerable<char> symbols) : base(length)
+        public SymbolsOfLengthRequirement(int length, IEnumerable<char> symbols) : base(length)
         {
             Symbols = symbols.Select(x => x.ToString()).ToList();
         }

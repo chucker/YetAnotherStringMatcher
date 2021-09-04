@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace YetAnotherStringMatcher.Requirements
 {
-    public class ThenAnyOfRequirement : IRequirement
+    public class AnyOfRequirement : IRequirement
     {
         public string Name => "Match one element that's also an element of provided Items list";
 
@@ -11,7 +11,7 @@ namespace YetAnotherStringMatcher.Requirements
 
         public CheckOptions Options { get; set; } = new CheckOptions();
 
-        public ThenAnyOfRequirement(params string[] items)
+        public AnyOfRequirement(params string[] items)
         {
             // We want to find longest string that matches,
             // so we start searching with the longest strings at the beginning.
@@ -37,6 +37,7 @@ namespace YetAnotherStringMatcher.Requirements
 
             return new CheckResult(false, index);
         }
+
         public override string ToString()
         {
             return "Then Any Of Requirement";
