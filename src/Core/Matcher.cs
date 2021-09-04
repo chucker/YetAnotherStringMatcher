@@ -64,9 +64,27 @@ namespace YetAnotherStringMatcher
             return ThenCustom(new ThenAnythingRequirement());
         }
 
-        public Matcher ThenAnythingOfLength(int i)
+        public Matcher ThenAnythingOfLength(int length)
         {
-            return ThenCustom(new ThenAnythingRequirement(i));
+            return ThenCustom(new ThenAnythingRequirement(length));
+        }
+
+        public Matcher ThenDigitsOfLength(int length)
+        {
+            Func<char, CheckOptions, bool> predicate = 
+                (char c, CheckOptions o) => char.IsDigit(c);
+
+            return ThenCustom(new ThenSomethingOfLenghtRequirement(length, predicate));
+        }
+
+        public Matcher ThenSymbolsOfLength(char[] symbols, int length)
+        {
+            return ThenCustom(new ThenSymbolsOfLengthRequirement(length, symbols));
+        }
+
+        public Matcher ThenCustomOfLength(Func<char, CheckOptions, bool> pred, int length)
+        {
+            return ThenCustom(new ThenSomethingOfLenghtRequirement(length, pred));
         }
 
         public Matcher IgnoreCase()
@@ -140,7 +158,7 @@ namespace YetAnotherStringMatcher
                 }
                 else
                 {
-                    return new EvaluationResult(false, $"Requirement number: {i} ('{requirement.Name}') wasn't fulfilled.");
+                    return new EvaluationResult(false, $"Requirement number: {i + 1} ('{requirement.Name}') wasn't fulfilled.");
                 }
             }
 

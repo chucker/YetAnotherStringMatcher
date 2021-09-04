@@ -47,18 +47,18 @@
 
             if (ExpectedLength.HasValue)
             {
-                var testIndex = index + ExpectedLength.Value;
+                var aheadIndex = index + ExpectedLength.Value;
 
-                if (!IndexHelper.WithinBounds(original, testIndex))
+                if (!IndexHelper.WithinBounds(original, aheadIndex))
                 {
                     return new CheckResult(false, index);
                 }
 
-                var result = NextRequirement.Check(original, testIndex);
+                var result = NextRequirement.Check(original, aheadIndex);
 
                 if (result.Success)
                 {
-                    return new CheckResult(true, testIndex + 1);
+                    return new CheckResult(true, result.NewIndex);
                 }
             }
             else

@@ -5,7 +5,7 @@ namespace YetAnotherStringMatcher.Requirements
 {
     public class ThenAnyOfRequirement : IRequirement
     {
-        public string Name => "Match one element";
+        public string Name => "Match one element that's also an element of provided Items list";
 
         public string[] Items { get; set; }
 
