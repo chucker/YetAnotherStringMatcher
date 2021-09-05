@@ -357,3 +357,5 @@ ___
 * Improve error handling / add some additional information why given step failed
 
 * Support more complex operations like ThenAnyOf(IRequirement, IRequirement, IRequirement...)
+
+* Perform Benchmarks between this and Regex (System.Text.RegularExpressions)
