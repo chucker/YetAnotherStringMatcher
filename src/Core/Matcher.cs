@@ -269,7 +269,7 @@ namespace YetAnotherStringMatcher
             if (endRequirements.Any() &&
                 (endRequirements.Count > 1 || endRequirements[0] != Requirements.Count - 1))
             {
-                throw new InvalidOperationException("EndRequirement can occur only once at the end of pattern");
+                throw new InvalidOperationException("NoMore can occur only once at the end of pattern");
             }
 
             var indices_to_to_remove = new List<int>();
