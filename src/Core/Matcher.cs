@@ -9,7 +9,7 @@ namespace YetAnotherStringMatcher
     {
         private int Index { get; set; } = 0;
 
-        private List<IRequirement> Requirements { get; set; } = new List<IRequirement>();
+        internal List<IRequirement> Requirements { get; set; } = new List<IRequirement>();
 
         public string OriginalString { get; private set; }
 
@@ -22,7 +22,7 @@ namespace YetAnotherStringMatcher
         {
         }
 
-        // Public API
+        // Public API here and inside MatcherExtensionMethods.cs
 
         public EvaluationResult Check()
         {
@@ -41,154 +41,6 @@ namespace YetAnotherStringMatcher
         {
             OriginalString = input;
             return Check();
-        }
-
-        // Basic
-
-        public Matcher Match(string item)
-        {
-            return Then(item);
-        }
-
-        public Matcher Then(string item)
-        {
-            return ThenCustom(new ThenRequirement(item));
-        }
-
-        // AnyOf
-
-        public Matcher MatchAnyOf(params string[] items)
-        {
-            return ThenCustom(new AnyOfRequirement(items));
-        }
-
-        public Matcher ThenAnyOf(params string[] items)
-        {
-            return ThenCustom(new AnyOfRequirement(items));
-        }
-
-        // Anything
-
-        public Matcher MatchAnything()
-        {
-            return ThenCustom(new AnythingRequirement());
-        }
-
-        public Matcher ThenAnything()
-        {
-            return ThenCustom(new AnythingRequirement());
-        }
-
-        // Anything Of Length
-
-        public Matcher MatchAnythingOfLength(int length)
-        {
-            return ThenCustom(new AnythingRequirement(length));
-        }
-
-        public Matcher ThenAnythingOfLength(int length)
-        {
-            return ThenCustom(new AnythingRequirement(length));
-        }
-
-        // Digits Of Length
-
-        public Matcher MatchDigitsOfLength(int length)
-        {
-            Func<char, CheckOptions, bool> predicate =
-                (char c, CheckOptions o) => char.IsDigit(c);
-
-            return ThenCustom(new SomethingOfLenghtRequirement(length, predicate));
-        }
-
-        public Matcher ThenDigitsOfLength(int length)
-        {
-            Func<char, CheckOptions, bool> predicate =
-                (char c, CheckOptions o) => char.IsDigit(c);
-
-            return ThenCustom(new SomethingOfLenghtRequirement(length, predicate));
-        }
-
-        // Digits With Length Between
-
-        public Matcher MatchDigitsWithLengthBetween(int min, int max)
-        {
-            Func<char, CheckOptions, bool> predicate =
-                (char c, CheckOptions o) => char.IsDigit(c);
-
-            return ThenCustom(new SomethingWithLenghtBetweenRequirement(min, max, predicate));
-        }
-
-        public Matcher ThenDigitsWithLengthBetween(int min, int max)
-        {
-            Func<char, CheckOptions, bool> predicate =
-                (char c, CheckOptions o) => char.IsDigit(c);
-
-            return ThenCustom(new SomethingWithLenghtBetweenRequirement(min, max, predicate));
-        }
-
-        // Symbols Of Length
-
-        public Matcher MatchSymbolsOfLength(char[] symbols, int length)
-        {
-            return ThenCustom(new SymbolsOfLengthRequirement(length, symbols));
-        }
-
-        public Matcher ThenSymbolsOfLength(char[] symbols, int length)
-        {
-            return ThenCustom(new SymbolsOfLengthRequirement(length, symbols));
-        }
-
-        // Custom Of Length
-
-        public Matcher MatchCustomOfLength(Func<char, CheckOptions, bool> pred, int length)
-        {
-            return ThenCustom(new SomethingOfLenghtRequirement(length, pred));
-        }
-
-        public Matcher ThenCustomOfLength(Func<char, CheckOptions, bool> pred, int length)
-        {
-            return ThenCustom(new SomethingOfLenghtRequirement(length, pred));
-        }
-
-        // Other:
-
-        public Matcher NoMore()
-        {
-            return ThenCustom(new EndRequirement());
-        }
-
-        public Matcher IgnoreCase()
-        {
-            if (Requirements.Count == 0)
-                throw new Exception("Cannot apply Options when there's not even one Requirement registered.");
-
-            var last = Requirements.Last().Options.IgnoreCase = true;
-
-            return this;
-        }
-
-        public Matcher IsOptional()
-        {
-            if (Requirements.Count == 0)
-                throw new Exception("Cannot apply Options when there's not even one Requirement registered.");
-
-            var last = Requirements.Last().Options.Optional = true;
-
-            return this;
-        }
-
-        public Matcher IgnoreCaseForAllExisting()
-        {
-            if (Requirements.Count == 0)
-                throw new Exception("Cannot apply Options when there's not even one Requirement registered.");
-
-            foreach (var req in Requirements)
-            {
-                req.Options.IgnoreCase = true;
-            }
-
-            return this;
         }
 
         public Matcher ThenCustom(IRequirement requirement)

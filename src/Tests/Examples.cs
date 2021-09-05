@@ -1,7 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Xunit;
 using YetAnotherStringMatcher;
+using System.Collections.Generic;
 
 namespace Tests
 {
