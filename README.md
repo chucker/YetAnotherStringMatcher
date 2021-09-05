@@ -55,8 +55,8 @@ var input = new List<string>
 };
 
 var pattern = new Matcher()
-				  .Match("[2021-09-05] ")
-				  .ThenAnyOf("WARNING:", "ERROR:");
+		  .Match("[2021-09-05] ")
+		  .ThenAnyOf("WARNING:", "ERROR:");
 
 Assert.True(pattern.Check(input[0]).Success);
 Assert.True(pattern.Check(input[1]).Success);
