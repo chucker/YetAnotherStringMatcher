@@ -14,10 +14,10 @@ namespace Tests
             var input = "12-345";
 
             var result = new Matcher(input)
-                         .MatchDigitsOfLength(2)
-                         .Then("-")
-                         .ThenDigitsOfLength(3)
-                         .Check();
+                             .MatchDigitsOfLength(2)
+                             .Then("-")
+                             .ThenDigitsOfLength(3)
+                             .Check();
 
             Assert.True(result.Success);
         }
@@ -29,17 +29,28 @@ namespace Tests
             var input = new List<string> { "+123 345 67 89", "+1424 345 67 89" };
 
             var pattern = new Matcher()
-                         .Match("+")
-                         .ThenDigitsOfLength(3)
-                         .Then(" ")
-                         .ThenDigitsOfLength(3)
-                         .Then(" ")
-                         .ThenDigitsOfLength(2)
-                         .Then(" ")
-                         .ThenDigitsOfLength(2);
+                              .Match("+")
+                              .ThenDigitsOfLength(3)
+                              .Then(" ")
+                              .ThenDigitsOfLength(3)
+                              .Then(" ")
+                              .ThenDigitsOfLength(2)
+                              .Then(" ")
+                              .ThenDigitsOfLength(2);
 
             Assert.True(pattern.Check(input[0]).Success);
             Assert.False(pattern.Check(input[1]).Success);
+        }
+
+        // For docs purposes
+        [Fact]
+        public void Test001_Test()
+        {
+            var matcher = new Matcher("TEST")
+                              .Match("test").IgnoreCase()
+                              .Check();
+
+            Assert.True(matcher.Success);
         }
     }
 }
