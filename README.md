@@ -4,7 +4,7 @@ YetAnotherStringMatcher library tries to make string matching easier, more reada
 
 It tries to replace Regex to some extent, mostly when it comes to relatively basic cases.
 
-For now is in very early version and may lack of "obvious things" and be kinda inconsistent in its APIs - mostly due to maintainer being retard.
+For now it is in very early version and apart from the errors, then it may lack of "obvious things" and be kinda inconsistent in its APIs - mostly due to maintainer being retard.
 
 Source Code: https://github.com/xd-loler/YetAnotherStringMatcher/tree/master/src/Core
 
