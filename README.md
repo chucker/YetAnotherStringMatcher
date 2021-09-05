@@ -137,6 +137,8 @@ var matcher = new Matcher("[2021-09-05] ERROR: Message1! Exception!")
                   .ThenAnything()
                   .Then("Exception!")
                   .Check();
+				  
+Assert.True(matcher.Success);
 ```
 
 **This one will FAIL:**
@@ -146,6 +148,8 @@ var matcher = new Matcher("12")
                   .ThenAnything()
                   .Then("2")
                   .Check();
+				  
+Assert.False(matcher.Success);
 ```
 
 ___
@@ -158,6 +162,8 @@ var matcher = new Matcher("01-000 London")
                   .ThenAnythingOfLength(5)
                   .Then("London")
                   .Check();
+				  
+Assert.True(matcher.Success);
 ```
 
 ___
@@ -170,6 +176,8 @@ var matcher = new Matcher("01-000 London")
                   .Then("-")
                   .MatchDigitsOfLength(3)
                   .Check();
+				  
+Assert.True(matcher.Success);
 ```
 
 **This one will FAIL:**
@@ -180,6 +188,8 @@ var matcher = new Matcher("aa-000 London")
                   .Then("-")
                   .MatchDigitsOfLength(3)
                   .Check();
+
+Assert.False(matcher.Success);
 ```
 
 ___
