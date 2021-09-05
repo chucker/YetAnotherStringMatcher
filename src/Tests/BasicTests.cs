@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using YetAnotherStringMatcher;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -248,6 +249,60 @@ namespace Tests
                             .Then("1");
 
             Assert.Throws<InvalidOperationException>(() => result.Check());
+        }
+
+        [Fact]
+        public void Test021_DigitsWithLengthBetween()
+        {
+            var inputs = new List<string> { "+1", "+12", "+123", "+1234" };
+
+            var pattern = new Matcher()
+                            .Match("+")
+                            .ThenDigitsWithLengthBetween(1, 3)
+                            .NoMore();
+
+            Assert.True(pattern.Check(inputs[0]).Success);
+            Assert.True(pattern.Check(inputs[1]).Success);
+            Assert.True(pattern.Check(inputs[2]).Success);
+
+            Assert.False(pattern.Check(inputs[3]).Success);
+        }
+
+        [Fact]
+        public void Test022_ThenAnything_EdgeCase()
+        {
+            var result = new Matcher("12")
+                            .Match("1")
+                            .ThenAnything()
+                            .Then("2")
+                            .Check();
+
+            Assert.False(result.Success);
+        }
+
+        [Fact]
+        public void Test023_ThenAnything()
+        {
+            var result = new Matcher("12")
+                            .Match("1")
+                            .ThenAnything()
+                            .Then("2")
+                            .Then("2")
+                            .Check();
+
+            Assert.False(result.Success);
+        }
+
+        [Fact]
+        public void Test024_Optional()
+        {
+            var result = new Matcher("13")
+                            .Match("1")
+                            .Then("2").IsOptional()
+                            .Then("3")
+                            .Check();
+
+            Assert.True(result.Success);
         }
     }
 }

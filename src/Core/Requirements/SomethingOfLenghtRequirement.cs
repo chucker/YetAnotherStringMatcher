@@ -1,4 +1,5 @@
 ﻿using System;
+using YetAnotherStringMatcher.Requirements.BaseClasses;
 
 namespace YetAnotherStringMatcher.Requirements
 {

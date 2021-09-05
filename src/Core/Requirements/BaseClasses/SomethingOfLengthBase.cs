@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 
-namespace YetAnotherStringMatcher.Requirements
+namespace YetAnotherStringMatcher.Requirements.BaseClasses
 {
     public abstract class SomethingOfLengthBase : IRequirement
     {
         public virtual string Name => "Matches symbol(s) that do satisfy predicate " +
             "and have expected length";
 
-        public int Length { get; set; }
+        public int Length { get; }
 
         public CheckOptions Options { get; set; } = new CheckOptions();
 

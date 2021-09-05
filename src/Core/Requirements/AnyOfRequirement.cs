@@ -23,12 +23,12 @@ namespace YetAnotherStringMatcher.Requirements
             if (original is null)
                 return new CheckResult(false, index);
 
+            var strComparison = Options?.IgnoreCase ?? false ?
+                                StringComparison.OrdinalIgnoreCase :
+                                StringComparison.Ordinal;
+
             foreach (var item in Items)
             {
-                var strComparison = Options?.IgnoreCase ?? false ?
-                                    StringComparison.OrdinalIgnoreCase :
-                                    StringComparison.Ordinal;
-
                 if (original.IndexOf(item, index, strComparison) == index)
                 {
                     return new CheckResult(true, index + item.Length);

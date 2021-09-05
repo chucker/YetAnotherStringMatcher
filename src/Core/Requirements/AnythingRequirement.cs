@@ -63,7 +63,7 @@
             }
             else
             {
-                for (int i = index; i < original.Length; i++)
+                for (int i = index + 1; i <= original.Length; i++)
                 {
                     var result = NextRequirement.Check(original, i);
 

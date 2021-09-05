@@ -11,9 +11,10 @@
             if (original is null)
                 return new CheckResult(false, index);
 
-            var stringIsLongerThanCurrentIndex = original.Length - 1 > index;
+            if (index >= original.Length)
+                return new CheckResult(true, index + 1);
 
-            return new CheckResult(!stringIsLongerThanCurrentIndex, index);
+            return new CheckResult(false, index);
         }
 
         public override string ToString()

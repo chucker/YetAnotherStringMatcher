@@ -7,15 +7,19 @@ namespace YetAnotherStringMatcher
 {
     public class Matcher
     {
-        public string OriginalString { get; }
-
         private int Index { get; set; } = 0;
 
         private List<IRequirement> Requirements { get; set; } = new List<IRequirement>();
 
+        public string OriginalString { get; private set; }
+
         public Matcher(string item)
         {
             OriginalString = item;
+        }
+
+        public Matcher()
+        {
         }
 
         // Public API
@@ -31,6 +35,12 @@ namespace YetAnotherStringMatcher
             {
                 Reset();
             }
+        }
+
+        public EvaluationResult Check(string input)
+        {
+            OriginalString = input;
+            return Check();
         }
 
         // Basic
@@ -97,6 +107,24 @@ namespace YetAnotherStringMatcher
             return ThenCustom(new SomethingOfLenghtRequirement(length, predicate));
         }
 
+        // Digits With Length Between
+
+        public Matcher MatchDigitsWithLengthBetween(int min, int max)
+        {
+            Func<char, CheckOptions, bool> predicate =
+                (char c, CheckOptions o) => char.IsDigit(c);
+
+            return ThenCustom(new SomethingWithLenghtBetweenRequirement(min, max, predicate));
+        }
+
+        public Matcher ThenDigitsWithLengthBetween(int min, int max)
+        {
+            Func<char, CheckOptions, bool> predicate =
+                (char c, CheckOptions o) => char.IsDigit(c);
+
+            return ThenCustom(new SomethingWithLenghtBetweenRequirement(min, max, predicate));
+        }
+
         // Symbols Of Length
 
         public Matcher MatchSymbolsOfLength(char[] symbols, int length)
@@ -110,6 +138,7 @@ namespace YetAnotherStringMatcher
         }
 
         // Custom Of Length
+
         public Matcher MatchCustomOfLength(Func<char, CheckOptions, bool> pred, int length)
         {
             return ThenCustom(new SomethingOfLenghtRequirement(length, pred));
@@ -137,6 +166,16 @@ namespace YetAnotherStringMatcher
             return this;
         }
 
+        public Matcher IsOptional()
+        {
+            if (Requirements.Count == 0)
+                throw new Exception("Cannot apply Options when there's not even one Requirement registered.");
+
+            var last = Requirements.Last().Options.Optional = true;
+
+            return this;
+        }
+
         public Matcher IgnoreCaseForAllExisting()
         {
             if (Requirements.Count == 0)
@@ -156,7 +195,7 @@ namespace YetAnotherStringMatcher
             return this;
         }
 
-        // Internal API
+        // Internal Stuff/APIs
 
         private void Reset()
         {
@@ -188,21 +227,29 @@ namespace YetAnotherStringMatcher
                     }
                     else
                     {
-                        // We ignore index out of bounds for last requirement.
+                        // We ignore index out of bounds for last requirement that isnt EndRequirement.
                         if (i != Requirements.Count - 1)
                         {
-                            var msg = $"After successful check '{requirement.GetType().Name}'" +
-                                $" the new Index was set to incorrect value - {result.NewIndex}.";
+                            var next = Requirements[i + 1];
+                            if (next is EndRequirement)
+                            {
+                                Index = result.NewIndex;
+                            }
+                            else
+                            {
+                                var msg = $"After successful check '{requirement.GetType().Name}'" +
+                                    $" the new Index was set to incorrect value - {result.NewIndex}.";
 
-                            throw new Exception(msg);
+                                throw new Exception(msg);
+                            }
                         }
-                        else
+                        else if (i == Requirements.Count - 1)
                         {
                             break;
                         }
                     }
                 }
-                else
+                else if (!requirement.Options.Optional)
                 {
                     return new EvaluationResult(false, $"Requirement number: {i + 1} ('{requirement.Name}') wasn't fulfilled.");
                 }
