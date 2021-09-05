@@ -56,6 +56,7 @@ namespace YetAnotherStringMatcher
         }
 
         // AnyOf
+
         public Matcher MatchAnyOf(params string[] items)
         {
             return ThenCustom(new AnyOfRequirement(items));
@@ -67,6 +68,7 @@ namespace YetAnotherStringMatcher
         }
 
         // Anything
+
         public Matcher MatchAnything()
         {
             return ThenCustom(new AnythingRequirement());
