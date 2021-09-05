@@ -361,5 +361,19 @@ namespace Tests
 
             Assert.True(pattern.Check().Success);
         }
+
+        [Fact]
+        public void Test028_AFew_ThenAnything()
+        {
+            var pattern = new Matcher("123456")
+                      .MatchAnything()
+                      .ThenAnything()
+                      .ThenAnything()
+                      .ThenAnything()
+                      .ThenAnything()
+                      .ThenAnything();
+
+            Assert.True(pattern.Check().Success);
+        }
     }
 }
