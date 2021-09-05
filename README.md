@@ -292,6 +292,20 @@ Assert.False(matcher.Success);
 
 ___
 
+**IsOptional** - matching will not fail if this particular element is not present
+
+```csharp
+var result = new Matcher("Apple Pineapple")
+                .Match("Apple ")
+                .Then("Coconut ").IsOptional()
+                .Then("Pineapple")
+                .Check();
+
+Assert.True(result.Success);
+```
+
+___
+
 **IgnoreCase** - Ignores Case
 
 ```csharp

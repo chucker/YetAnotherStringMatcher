@@ -46,11 +46,13 @@ namespace Tests
         [Fact]
         public void Test001_Test()
         {
-            var matcher = new Matcher("TEST")
-                              .Match("test").IgnoreCase()
-                              .Check();
+            var result = new Matcher("Apple Pineapple")
+                            .Match("Apple ")
+                            .Then("Coconut ").IsOptional()
+                            .Then("Pineapple")
+                            .Check();
 
-            Assert.True(matcher.Success);
+            Assert.True(result.Success);
         }
     }
 }
