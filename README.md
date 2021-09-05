@@ -100,6 +100,8 @@ var matcher = new Matcher("ERROR: Exception 1...")
 Assert.True(matcher.Success);
 ```
 
+___
+
 
 **MatchAnyOf / ThenAnyOf** - tries to match longest possible element of list handed as parameter.
 
@@ -112,6 +114,7 @@ var matcher = new Matcher("Apple Watermelon")
 
 Assert.True(matcher.Success);
 ```
+___
 
 **MatchAnything / ThenAnything** - matches anything non empty
 
@@ -132,6 +135,8 @@ var matcher = new Matcher("12")
                   .Check();
 ```
 
+___
+
 **MatchAnythingOfLength / ThenAnythingOfLength** - matches anything that has expected length
 
 ```csharp
@@ -141,6 +146,8 @@ var matcher = new Matcher("01-000 London")
                   .Then("London")
                   .Check();
 ```
+
+___
 
 **MatchDigitsOfLength / ThenDigitsOfLength** - matches digits of expected length
 
@@ -161,6 +168,8 @@ var matcher = new Matcher("aa-000 London")
                   .MatchDigitsOfLength(3)
                   .Check();
 ```
+
+___
 
 **MatchDigitsWithLengthBetween / ThenDigitsWithLengthBetween** - matches digits with length between [A...B]
 
@@ -189,6 +198,8 @@ var pattern = new Matcher()
 Assert.False(pattern.Check(input[0]).Success);
 ```
 
+___
+
 **MatchSymbolsOfLength / ThenSymbolsOfLength** - matches symbols that are provided
 
 ```csharp
@@ -215,6 +226,8 @@ var pattern = new Matcher()
 Assert.False(pattern.Check(input[0]).Success);
 ```
 
+___
+
 **MatchCustomOfLength / ThenCustomOfLength** - matches symbols that satisfy given predicate
 
 ```csharp
@@ -239,6 +252,7 @@ var matcher = new Matcher("abc")
 Assert.False(matcher.Success);
 ```
 
+___
 
 **NoMore** - string must end here
 
@@ -251,6 +265,8 @@ var matcher = new Matcher("TEST123")
 Assert.False(matcher.Success);
 ```
 
+___
+
 **IgnoreCase** - Ignores Case
 
 ```csharp
@@ -260,6 +276,8 @@ var matcher = new Matcher("TEST")
 
 Assert.True(matcher.Success);
 ```
+
+___
 
 **IgnoreCaseForAllExisting** - Ignores Case for all previous requirements
 
@@ -273,4 +291,12 @@ var matcher = new Matcher("TEST_ABC")
 Assert.True(matcher.Success);
 ```
 
+___
+
 **ThenCustom** - You can provide your own implementation of IRequirement interface.
+
+___
+
+# To Do List
+
+// TODO
