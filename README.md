@@ -10,6 +10,16 @@ Source Code: https://github.com/xd-loler/YetAnotherStringMatcher/tree/master/src
 
 Tests: https://github.com/xd-loler/YetAnotherStringMatcher/blob/master/src/Tests/BasicTests.cs
 
+## How to install
+
+* .NET CLI: `dotnet add package YetAnotherStringMatcher --version 1.0.1`
+
+* Package Manager: `Install-Package YetAnotherStringMatcher -Version 1.0.1`
+
+* Package Reference: `<PackageReference Include="YetAnotherStringMatcher" Version="1.0.1" />`
+
+* Nuget.org URL: https://www.nuget.org/packages/YetAnotherStringMatcher/
+
 ## Some random examples, more in specific API description below
 
 ```csharp
