@@ -72,10 +72,10 @@ Assert.False(pattern.Check(input[2]).Success);
 ```
 
 ```csharp
-var matcher = new Matcher("01-000 London")
-                  .MatchDigitsOfLength(2)
-                  .Then("-")
-                  .MatchDigitsOfLength(3)
+var matcher = new Matcher("[2021-09-05] ERROR: Message1! Exception!")
+                  .Match("[2021-09-05]")
+                  .ThenAnything()
+                  .Then("Exception!")
                   .Check();
 ```
 
