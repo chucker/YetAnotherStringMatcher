@@ -101,6 +101,15 @@ Assert.True(pattern.Check(input[0]).Success);
 Assert.False(pattern.Check(input[1]).Success);
 ```
 
+```csharp
+var result = new Matcher("Apple Pineapple")
+                .Match("Apple ")
+                .Then("Coconut ").IsOptional()
+                .Then("Pineapple")
+                .Check();
+
+Assert.True(result.Success);
+```
 
 # Avaliable APIs:
 
