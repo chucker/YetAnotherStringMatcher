@@ -324,7 +324,10 @@ ___
 
 # FAQ
 
-Should I use this on prod? Probably not (yet)
+* Should I use this on prod? Probably not (yet)
+
+* Why does it use old C#? I wanted it to work even on old .NET
+
 
 # To Do List
 
