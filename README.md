@@ -36,21 +36,11 @@ Assert.True(result.Success);
 ```
 
 ```csharp
-// Sample Phone Number / Reusable Pattern
-var input = new List<string> { "+123 345 67 89", "+1424 345 67 89" };
-
-var pattern = new Matcher()
-                  .Match("+")
-                  .ThenDigitsOfLength(3)
-                  .Then(" ")
-                  .ThenDigitsOfLength(3)
-                  .Then(" ")
-                  .ThenDigitsOfLength(2)
-                  .Then(" ")
-                  .ThenDigitsOfLength(2);
-
-Assert.True(pattern.Check(input[0]).Success);
-Assert.False(pattern.Check(input[1]).Success);
+var matcher = new Matcher("[2021-09-05] ERROR: Message1! Exception!")
+                  .Match("[2021-09-05]")
+                  .ThenAnything()
+                  .Then("Exception!")
+                  .Check();
 ```
 
 ```csharp
@@ -72,14 +62,6 @@ Assert.False(pattern.Check(input[2]).Success);
 ```
 
 ```csharp
-var matcher = new Matcher("[2021-09-05] ERROR: Message1! Exception!")
-                  .Match("[2021-09-05]")
-                  .ThenAnything()
-                  .Then("Exception!")
-                  .Check();
-```
-
-```csharp
 var matcher = new Matcher("Apple Watermelon")
                   .MatchAnyOf("Apple", "Banana")
                   .Then(" ")
@@ -96,6 +78,25 @@ var matcher = new Matcher("TEST")
 
 Assert.True(matcher.Success);
 ```
+
+```csharp
+// Sample Phone Number / Reusable Pattern
+var input = new List<string> { "+123 345 67 89", "+1424 345 67 89" };
+
+var pattern = new Matcher()
+                  .Match("+")
+                  .ThenDigitsOfLength(3)
+                  .Then(" ")
+                  .ThenDigitsOfLength(3)
+                  .Then(" ")
+                  .ThenDigitsOfLength(2)
+                  .Then(" ")
+                  .ThenDigitsOfLength(2);
+
+Assert.True(pattern.Check(input[0]).Success);
+Assert.False(pattern.Check(input[1]).Success);
+```
+
 
 # Avaliable APIs:
 
