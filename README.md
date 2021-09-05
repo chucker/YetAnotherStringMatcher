@@ -48,19 +48,21 @@ Assert.True(matcher.Success);
 ```csharp
 var input = new List<string>
 {
-    "[2021-09-05] ERROR: Message1",
-    "[2021-09-05] WARNING: Message1",
-    "[2021-09-07] WARNING: Message1",
+	"[2021-09-05] ERROR: Message1",
+	"[2021-09-05] WARNING: Message1",
+	"[2021-09-05] INFO: Message1",
+	"[2021-09-07] WARNING: Message1",
 };
 
 var pattern = new Matcher()
-                  .Match("[2021-09-05] ")
-                  .ThenAnyOf("WARNING:", "ERROR:");
+				  .Match("[2021-09-05] ")
+				  .ThenAnyOf("WARNING:", "ERROR:");
 
 Assert.True(pattern.Check(input[0]).Success);
 Assert.True(pattern.Check(input[1]).Success);
 
 Assert.False(pattern.Check(input[2]).Success);
+Assert.False(pattern.Check(input[3]).Success);
 ```
 
 ```csharp
