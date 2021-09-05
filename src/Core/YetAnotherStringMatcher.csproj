@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/xd-loler/YetAnotherStringMatcher</RepositoryUrl>
     <Description>YetAnotherStringMatcher library tries to make string matching easier, more readable while being somewhat expressive.
 
-It tries to replace Regex to some extent.</Description>
+It tries to replace Regex to some extent, mostly when it comes to relatively basic cases.</Description>
   </PropertyGroup>
 
 </Project>
