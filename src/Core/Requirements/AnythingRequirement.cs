@@ -28,14 +28,18 @@
                 return new CheckResult(false, index);
 
             var validIndex = IndexHelper.WithinBounds(original, index);
-            var lastIndex = index == original.Length - 1;
 
             if (!validIndex)
                 return new CheckResult(false, index);
 
             if (IsLastRequirement)
             {
-                if (lastIndex)
+                // Because the way we manipulate indices,
+                // we're standing on last index and we haven't checked it yet,
+                // but since it can be Anything, then we're fine.
+                // With this approach "last index" is at LastIndex+1 (Length/Count)
+
+                if (index == original.Length)
                 {
                     return new CheckResult(false, index);
                 }

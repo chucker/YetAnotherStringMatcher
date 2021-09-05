@@ -324,5 +324,42 @@ namespace Tests
 
             Assert.False(pattern.Check(input[2]).Success);
         }
+
+        [Fact]
+        public void Test026_Email_Like()
+        {
+            var input = new List<string>
+            {
+                "test@@.",
+                "test@gmail.com",
+                "\"test\"@gmail.com",
+                "test@ab.c",
+            };
+
+            var pattern = new Matcher()
+                      .MatchAnything()
+                      .Then("@")
+                      .ThenAnything()
+                      .Then(".")
+                      .ThenAnything();
+
+            Assert.False(pattern.Check(input[0]).Success);
+            Assert.True(pattern.Check(input[1]).Success);
+            Assert.True(pattern.Check(input[2]).Success);
+            Assert.True(pattern.Check(input[3]).Success);
+        }
+
+        [Fact]
+        public void Test027_Email_Like()
+        {
+            var pattern = new Matcher("1@@..")
+                      .MatchAnything()
+                      .Then("@")
+                      .ThenAnything()
+                      .Then(".")
+                      .ThenAnything();
+
+            Assert.True(pattern.Check().Success);
+        }
     }
 }

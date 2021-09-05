@@ -91,10 +91,7 @@ namespace YetAnotherStringMatcher
                             }
                             else
                             {
-                                var msg = $"After successful check '{requirement.GetType().Name}'" +
-                                    $" the new Index was set to incorrect value - {result.NewIndex}.";
-
-                                throw new Exception(msg);
+                                return new EvaluationResult(false, $"Requirement number: {i + 1} ('{requirement.Name}') was fulfilled, but string has ended too early.");
                             }
                         }
                         else if (i == Requirements.Count - 1)
