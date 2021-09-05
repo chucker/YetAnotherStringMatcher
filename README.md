@@ -41,6 +41,8 @@ var matcher = new Matcher("[2021-09-05] ERROR: Message1! Exception!")
                   .ThenAnything()
                   .Then("Exception!")
                   .Check();
+				  
+Assert.True(matcher.Success);
 ```
 
 ```csharp
