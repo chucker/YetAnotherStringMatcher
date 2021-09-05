@@ -63,6 +63,7 @@
             }
             else
             {
+                // + 1 because we want to match at least one character.
                 for (int i = index + 1; i <= original.Length; i++)
                 {
                     var result = NextRequirement.Check(original, i);
